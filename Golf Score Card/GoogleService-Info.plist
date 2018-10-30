@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>605923254332-u445nvjl93c44h3knaosh251foao2bvj.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.605923254332-u445nvjl93c44h3knaosh251foao2bvj</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCed6_Yf3FFvhLN1s4kK92d-bMLy9wqKEg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>605923254332</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.expertservices.Golf-Score-Card</string>
+	<key>PROJECT_ID</key>
+	<string>golf-score-card-b7baf</string>
+	<key>STORAGE_BUCKET</key>
+	<string>golf-score-card-b7baf.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:605923254332:ios:f376fcc0d6589ed3</string>
+	<key>DATABASE_URL</key>
+	<string>https://golf-score-card-b7baf.firebaseio.com</string>
+</dict>
+</plist>
