@@ -7,40 +7,36 @@
 //
 
 import UIKit
-import FirebaseDatabase
+import Firebase
 
 class AddPlayerViewController: UIViewController {
     
     @IBOutlet weak var playerName: UITextField!
     @IBOutlet weak var playerHandicap: UITextField!
     
-    var players = [Player]()
-    weak var delegate: ScoringViewController!
+    // MARK: - Properties
     
-    var ref: DatabaseReference?
-    var databaseHandle: DatabaseHandle?
+    var ref: DatabaseReference!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        ref = Database.database().reference()
+        ref = Database.database().reference(withPath: "players")
+        
+       
     }
     
     @IBAction func addPlayer(_ sender: Any) {
         guard let name = playerName.text,
             let handicap = playerHandicap.text else { return }
         
-        let player = Player(name: name, handicap: handicap)
+        let player = ["name" : name, "handicap" : handicap]
         
-        ref?.child("Players").setValue(playerName.text)
-        ref?.child("Players").child(playerName.text!).child("Handicap").setValue(playerHandicap.text)
-        players.append(player)
-        
+        ref?.child(name.lowercased()).setValue(player)
+
         playerName.text = ""
         playerHandicap.text = ""
         
-        print(players)
-        print(players.isEmpty)
     }
     
 

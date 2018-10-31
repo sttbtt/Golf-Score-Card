@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -22,12 +23,14 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var player3PickerView: UIPickerView!
     @IBOutlet weak var player4PickerView: UIPickerView!
     
-    let addPlayerViewController = AddPlayerViewController()
-    
+    // MARK: - Properties
     
     let strokes = [["1", "2", "3", "4", "5", "6", "7", "8", "9"]]
     var strokeSelected: String = ""
-
+    var players: [Player] = [Player]()
+    var ref: DatabaseReference!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,22 +44,64 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         self.player4PickerView.delegate = self
         self.player4PickerView.dataSource = self
         
+
+//        ref = Database.database().reference(withPath: "players")
+//
+//        ref.observe(.value, with: { snapshot in
+//            var players: [Player] = []
+//            for player in snapshot.children {
+//                let player = Player(snapshot: player as! DataSnapshot)
+//                //players.append(player!)
+//                print(player)
+//            }
+//        })
+//
+//        ref.child("scott").observe(.value) { (snapshot) in
+//            let values = snapshot.value as! [String: AnyObject]
+//            let name = values["name"] as! String
+//            let handicap = values["handicap"] as! String
+//
+//            print("name: \(name)")
+//            print("handicap: \(handicap)")
+//
+//            self.player1Name.text = name
+//        }
+        
+        fetchPlayers()
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    @IBAction func nextHole(_ sender: Any) {
+    }
+    
+    
+    @IBAction func previousHole(_ sender: Any) {
+    }
+    
+    func fetchPlayers() {
+        let playerDB = Database.database().reference().child("players")
         
-        if !addPlayerViewController.players.isEmpty {
+        playerDB.observe(.childAdded) { (snapshot) in
             
-            self.player1Name.text = addPlayerViewController.players[0].name
-            self.player2Name.text = addPlayerViewController.players[1].name
-            self.player3Name.text = addPlayerViewController.players[2].name
-            self.player4Name.text = addPlayerViewController.players[3].name
+            let snapshotValue = snapshot.value as! Dictionary<String, String>
+            
+            let name = snapshotValue["name"]!
+            let handicap = snapshotValue["handicap"]!
+            
+            var player = Player()
+            player.name = name
+            player.handicap = handicap
+            
+            self.players.append(player)
         }
+        
+        print(players)
+        
+//        player1Name.text = players[0].name
+//        player1Name.text = players[1].name
+//        player1Name.text = players[2].name
+//        player1Name.text = players[3].name
     }
-    
-    
     
     // MARK: - PickerView
     

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8C2497FD9B1F54489F9AEE4E /* Pods_Golf_Score_Card.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40EEA52C6ED540970EBFF87F /* Pods_Golf_Score_Card.framework */; };
+		F120F1972189FE25006D47B0 /* CoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F120F1962189FE25006D47B0 /* CoursesViewController.swift */; };
 		F1ED9B6E2187B2970093B95B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1ED9B6D2187B2970093B95B /* GoogleService-Info.plist */; };
 		F1F131B521873B2B00EAB647 /* AddPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F131B421873B2B00EAB647 /* AddPlayerViewController.swift */; };
 		F1FD00932186815E00EDD3A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FD00922186815E00EDD3A1 /* AppDelegate.swift */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		280DDB01B9B3F90DCBEA888A /* Pods-Golf Score Card.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Golf Score Card.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Golf Score Card/Pods-Golf Score Card.debug.xcconfig"; sourceTree = "<group>"; };
 		40EEA52C6ED540970EBFF87F /* Pods_Golf_Score_Card.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Golf_Score_Card.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F120F1962189FE25006D47B0 /* CoursesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesViewController.swift; sourceTree = "<group>"; };
 		F1ED9B6D2187B2970093B95B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F1F131B421873B2B00EAB647 /* AddPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlayerViewController.swift; sourceTree = "<group>"; };
 		F1FD008F2186815E00EDD3A1 /* Golf Score Card.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Golf Score Card.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,6 +131,7 @@
 			children = (
 				F1FD00A62186B8A100EDD3A1 /* ScoringViewController.swift */,
 				F1F131B421873B2B00EAB647 /* AddPlayerViewController.swift */,
+				F120F1962189FE25006D47B0 /* CoursesViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1FD00AD2186BFA100EDD3A1 /* Course.swift in Sources */,
+				F120F1972189FE25006D47B0 /* CoursesViewController.swift in Sources */,
 				F1F131B521873B2B00EAB647 /* AddPlayerViewController.swift in Sources */,
 				F1FD00A72186B8A100EDD3A1 /* ScoringViewController.swift in Sources */,
 				F1FD00AB2186BF9900EDD3A1 /* Player.swift in Sources */,
