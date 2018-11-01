@@ -9,9 +9,9 @@
 import Foundation
 import Firebase
 
-struct Player {
+class Player {
     var name: String
-    var handicap: String?
+    var handicap: String
     
     init(name: String = "", handicap: String = "0") {
         self.name = name

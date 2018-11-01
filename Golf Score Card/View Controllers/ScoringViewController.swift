@@ -16,6 +16,11 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var player3Name: UILabel!
     @IBOutlet weak var player4Name: UILabel!
     
+    @IBOutlet weak var player1ScoreLabel: UILabel!
+    @IBOutlet weak var player2ScoreLabel: UILabel!
+    @IBOutlet weak var player3ScoreLabel: UILabel!
+    @IBOutlet weak var player4ScoreLabel: UILabel!
+    
     @IBOutlet weak var holeNumber: UILabel!
     
     @IBOutlet weak var player1PickerView: UIPickerView!
@@ -25,9 +30,22 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     // MARK: - Properties
     
-    let strokes = [["1", "2", "3", "4", "5", "6", "7", "8", "9"]]
+//    let strokes = [["1", "2", "3", "4", "5", "6", "7", "8", "9"]]
     var strokeSelected: String = ""
+    var player1Strokes = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    var player2Strokes = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    var player3Strokes = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    var player4Strokes = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
     var currentHole = 1
+    var player1Score = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    var player2Score = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    var player3Score = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    var player4Score = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    var player1Row = 4
+    var player2Row = 4
+    var player3Row = 4
+    var player4Row = 4
+    
     
     // Mark: - References
     
@@ -48,17 +66,29 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         self.player4PickerView.delegate = self
         self.player4PickerView.dataSource = self
 
-        
         fetchPlayers()
-        let score = player1PickerView.value(forKey: strokes)
-        print(score)
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+       
     }
     
     @IBAction func nextHole(_ sender: Any) {
         if currentHole < 18 {
             currentHole += 1
             holeNumber.text = "Hole # \(currentHole)"
+            player1ScoreLabel.text = String(player1Score.reduce(0, +))
+            player2ScoreLabel.text = String(player2Score.reduce(0, +))
+            player3ScoreLabel.text = String(player3Score.reduce(0, +))
+            player4ScoreLabel.text = String(player4Score.reduce(0, +))
+            
+            player1PickerView.selectRow(player1Score[currentHole - 1], inComponent: 0, animated: true)
+            player2PickerView.selectRow(player2Score[currentHole - 1], inComponent: 0, animated: true)
+            player3PickerView.selectRow(player3Score[currentHole - 1], inComponent: 0, animated: true)
+            player4PickerView.selectRow(player4Score[currentHole - 1], inComponent: 0, animated: true)
         }
         
     }
@@ -68,6 +98,15 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         if currentHole > 1 {
             currentHole -= 1
             holeNumber.text = "Hole # \(currentHole)"
+            player1ScoreLabel.text = String(player1Score.reduce(0, +))
+            player2ScoreLabel.text = String(player2Score.reduce(0, +))
+            player3ScoreLabel.text = String(player3Score.reduce(0, +))
+            player4ScoreLabel.text = String(player4Score.reduce(0, +))
+            
+            player1PickerView.selectRow(player1Score[currentHole - 1], inComponent: 0, animated: true)
+            player2PickerView.selectRow(player2Score[currentHole - 1], inComponent: 0, animated: true)
+            player3PickerView.selectRow(player3Score[currentHole - 1], inComponent: 0, animated: true)
+            player4PickerView.selectRow(player4Score[currentHole - 1], inComponent: 0, animated: true)
         }
         
     }
@@ -77,24 +116,30 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         
         playerDB.observe(.childAdded) { (snapshot) in
             
-            let snapshotValue = snapshot.value as! Dictionary<String, String>
+            let snapshotValue = snapshot.value as! Dictionary<String,String>
             
             let name = snapshotValue["name"]!
             let handicap = snapshotValue["handicap"]!
             
-            var player = Player()
+            let player = Player()
             player.name = name
             player.handicap = handicap
             
             self.players.append(player)
+            print(self.players)
+            
+            DispatchQueue.main.async {
+                self.updateLabels()
+            }
         }
-        
-        print(players)
-        
-        player1Name.text = "John"
-        player2Name.text = "Paul"
-        player3Name.text = "Ringo"
-        player4Name.text = "George"
+       
+    }
+    
+    func updateLabels() {
+        player1Name.text = players[0].name
+        player2Name.text = players[1].name
+        player3Name.text = players[2].name
+        player4Name.text = players[3].name
     }
     
     // MARK: - PickerView
@@ -104,18 +149,48 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return strokes[0].count
+        
+        if pickerView == player1PickerView {
+            return player1Strokes.count
+        } else if pickerView == player2PickerView {
+            return player2Strokes.count
+        }else if pickerView == player3PickerView {
+            return player3Strokes.count
+        } else {
+            return player4Strokes.count
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return strokes[component][row]
+        
+        if pickerView == player1PickerView {
+            return player1Strokes[row]
+        } else if pickerView == player2PickerView {
+            return player2Strokes[row]
+        }else if pickerView == player3PickerView {
+            return player3Strokes[row]
+        } else {
+            return player4Strokes[row]
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        strokeSelected = strokes[0][row]
         
+        if pickerView == player1PickerView {
+            player1Score[currentHole - 1] = Int(player1Strokes[row])!
+        } else if pickerView == player2PickerView {
+            player2Score[currentHole - 1] = Int(player2Strokes[row])!
+        } else if pickerView == player3PickerView {
+            player3Score[currentHole - 1] = Int(player3Strokes[row])!
+        } else {
+            player4Score[currentHole - 1] = Int(player4Strokes[row])!
+        }
     }
     
+
+
+
+
     // MARK: - Rotation
     
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
