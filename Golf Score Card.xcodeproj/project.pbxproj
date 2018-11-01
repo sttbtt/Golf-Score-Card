@@ -69,13 +69,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F1ED9B6A218766DA0093B95B /* Model Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Model Controllers";
-			sourceTree = "<group>";
-		};
 		F1FD00862186815E00EDD3A1 = {
 			isa = PBXGroup;
 			children = (
@@ -99,7 +92,6 @@
 			children = (
 				F1ED9B6D2187B2970093B95B /* GoogleService-Info.plist */,
 				F1FD00A92186BF8A00EDD3A1 /* Models */,
-				F1ED9B6A218766DA0093B95B /* Model Controllers */,
 				F1FD00A82186B8A500EDD3A1 /* View Controllers */,
 				F1FD00A52186837C00EDD3A1 /* Storyboards */,
 				F1FD00A42186836700EDD3A1 /* Resources */,

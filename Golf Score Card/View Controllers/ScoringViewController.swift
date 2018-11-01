@@ -27,9 +27,13 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     let strokes = [["1", "2", "3", "4", "5", "6", "7", "8", "9"]]
     var strokeSelected: String = ""
-    var players: [Player] = [Player]()
-    var ref: DatabaseReference!
+    var currentHole = 1
     
+    // Mark: - References
+    
+    var ref: DatabaseReference!
+//    let addPlayerVC = AddPlayerViewController()
+    var players = [Player]()
     
     
     override func viewDidLoad() {
@@ -43,39 +47,29 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         self.player3PickerView.dataSource = self
         self.player4PickerView.delegate = self
         self.player4PickerView.dataSource = self
-        
 
-//        ref = Database.database().reference(withPath: "players")
-//
-//        ref.observe(.value, with: { snapshot in
-//            var players: [Player] = []
-//            for player in snapshot.children {
-//                let player = Player(snapshot: player as! DataSnapshot)
-//                //players.append(player!)
-//                print(player)
-//            }
-//        })
-//
-//        ref.child("scott").observe(.value) { (snapshot) in
-//            let values = snapshot.value as! [String: AnyObject]
-//            let name = values["name"] as! String
-//            let handicap = values["handicap"] as! String
-//
-//            print("name: \(name)")
-//            print("handicap: \(handicap)")
-//
-//            self.player1Name.text = name
-//        }
         
         fetchPlayers()
+        let score = player1PickerView.value(forKey: strokes)
+        print(score)
         
     }
     
     @IBAction func nextHole(_ sender: Any) {
+        if currentHole < 18 {
+            currentHole += 1
+            holeNumber.text = "Hole # \(currentHole)"
+        }
+        
     }
     
     
     @IBAction func previousHole(_ sender: Any) {
+        if currentHole > 1 {
+            currentHole -= 1
+            holeNumber.text = "Hole # \(currentHole)"
+        }
+        
     }
     
     func fetchPlayers() {
@@ -97,10 +91,10 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         
         print(players)
         
-//        player1Name.text = players[0].name
-//        player1Name.text = players[1].name
-//        player1Name.text = players[2].name
-//        player1Name.text = players[3].name
+        player1Name.text = "John"
+        player2Name.text = "Paul"
+        player3Name.text = "Ringo"
+        player4Name.text = "George"
     }
     
     // MARK: - PickerView

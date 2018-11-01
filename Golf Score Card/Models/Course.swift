@@ -12,4 +12,5 @@ struct Course {
     let name: String
     let par: [Int]
     let handicap: [Int]
+    let yardage: [Int]
 }

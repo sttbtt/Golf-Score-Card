@@ -17,6 +17,7 @@ class AddPlayerViewController: UIViewController {
     // MARK: - Properties
     
     var ref: DatabaseReference!
+    var players = [Player]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,12 +31,19 @@ class AddPlayerViewController: UIViewController {
         guard let name = playerName.text,
             let handicap = playerHandicap.text else { return }
         
+        let playerZ = Player(name: name, handicap: handicap)
         let player = ["name" : name, "handicap" : handicap]
         
         ref?.child(name.lowercased()).setValue(player)
+        
+        players.append(playerZ)
 
         playerName.text = ""
         playerHandicap.text = ""
+        
+        self.view.endEditing(true)
+        
+        print(players)
         
     }
     
