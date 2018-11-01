@@ -13,7 +13,7 @@ class Player {
     var name: String
     var handicap: String
     
-    init(name: String = "", handicap: String = "0") {
+    init(name: String = " ", handicap: String = "0") {
         self.name = name
         self.handicap = handicap
     }

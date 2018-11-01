@@ -382,20 +382,12 @@
                                 <rect key="frame" x="283" y="118" width="72" height="46"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </pickerView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fgu-uV-fDT">
-                                <rect key="frame" x="23" y="676" width="67" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fgu-uV-fDT">
+                                <rect key="frame" x="20" y="66" width="58" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Prev Hole"/>
+                                <state key="normal" image="paper_plane"/>
                                 <connections>
                                     <action selector="previousHole:" destination="SWY-kE-VwD" eventType="touchUpInside" id="5sR-6f-sba"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ep0-L2-6uU">
-                                <rect key="frame" x="291" y="676" width="68" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Next Hole"/>
-                                <connections>
-                                    <action selector="nextHole:" destination="SWY-kE-VwD" eventType="touchUpInside" id="xYU-ap-Oh6"/>
                                 </connections>
                             </button>
                             <pickerView tag="2" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5mo-PK-Hxx">
@@ -459,17 +451,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hole # 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S30-Xy-OqU">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="HOLE 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S30-Xy-OqU">
                                 <rect key="frame" x="126" y="66" width="123" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O5y-FH-2Oe">
-                                <rect key="frame" x="181" y="128" width="39" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -481,6 +466,21 @@
                                     <segment title="PAR"/>
                                 </segments>
                             </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O5y-FH-2Oe">
+                                <rect key="frame" x="181" y="128" width="39" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ep0-L2-6uU">
+                                <rect key="frame" x="293" y="66" width="62" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="paper_plane"/>
+                                <connections>
+                                    <action selector="nextHole:" destination="SWY-kE-VwD" eventType="touchUpInside" id="xYU-ap-Oh6"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <viewLayoutGuide key="safeArea" id="7Qk-eh-G4e"/>
@@ -488,6 +488,7 @@
                     <tabBarItem key="tabBarItem" title="Play" image="play" id="8k8-wt-FQJ"/>
                     <connections>
                         <outlet property="holeNumber" destination="S30-Xy-OqU" id="8Hc-IV-VFk"/>
+                        <outlet property="nextHoleLabel" destination="Ep0-L2-6uU" id="obS-JD-WsF"/>
                         <outlet property="player1Name" destination="gAx-Lu-pfl" id="y2r-CK-OC7"/>
                         <outlet property="player1PickerView" destination="T0O-w0-nFO" id="5SS-UC-kcJ"/>
                         <outlet property="player1ScoreLabel" destination="O5y-FH-2Oe" id="AAB-ja-RUZ"/>
@@ -500,6 +501,7 @@
                         <outlet property="player4Name" destination="OY2-LL-hni" id="iGd-nC-lNV"/>
                         <outlet property="player4PickerView" destination="32Z-sz-N2T" id="eQ6-5Q-WQz"/>
                         <outlet property="player4ScoreLabel" destination="P5k-iT-r36" id="3pJ-0n-Hcv"/>
+                        <outlet property="previousHoleLabel" destination="Fgu-uV-fDT" id="5cY-SR-8aC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ahf-Ax-IdH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -597,8 +599,8 @@
                     </tabBar>
                     <connections>
                         <segue destination="wkb-QA-iKA" kind="relationship" relationship="viewControllers" id="0aN-75-FlI"/>
-                        <segue destination="VKv-pN-TJ3" kind="relationship" relationship="viewControllers" id="E2P-oe-yql"/>
                         <segue destination="SWY-kE-VwD" kind="relationship" relationship="viewControllers" id="uaZ-vN-rcM"/>
+                        <segue destination="VKv-pN-TJ3" kind="relationship" relationship="viewControllers" id="E2P-oe-yql"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7WG-ft-r1f" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -607,6 +609,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="paper_plane" width="30" height="30"/>
         <image name="people" width="30" height="30"/>
         <image name="play" width="30" height="30"/>
         <image name="settings" width="30" height="30"/>

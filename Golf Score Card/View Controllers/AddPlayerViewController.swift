@@ -50,24 +50,37 @@ class AddPlayerViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func retrievePlayers() {
+//        Database.database().reference().child("players").observe(.childAdded, with: { (snapshot) in
+//
+//            if let dictionary = snapshot.value as? [String: AnyObject] {
+//                let player = Player()
+//
+//                player.name = dictionary["name"] as! String
+//                player.handicap = dictionary["handicap"] as! String
+//
+//                self.players.append(player)
+//
+//                DispatchQueue.main.async { self.playerTableView.reloadData() }
+//            }
+//
+//        }, withCancel: nil)
+      
         let playerDB = Database.database().reference().child("players")
-        
+
         playerDB.observe(.childAdded) { (snapshot) in
-            
+
             let snapshotValue = snapshot.value as! Dictionary<String,String>
-            
+
             let name = snapshotValue["name"]!
             let handicap = snapshotValue["handicap"]!
-            
+
             let player = Player()
             player.name = name
             player.handicap = handicap
-            
+
             self.players.append(player)
             
-            DispatchQueue.main.async {
-                self.playerTableView.reloadData()
-            }
+            DispatchQueue.main.async { self.playerTableView.reloadData() }
             
         }
 

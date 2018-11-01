@@ -27,6 +27,8 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var player2PickerView: UIPickerView!
     @IBOutlet weak var player3PickerView: UIPickerView!
     @IBOutlet weak var player4PickerView: UIPickerView!
+    @IBOutlet weak var nextHoleLabel: UIButton!
+    @IBOutlet weak var previousHoleLabel: UIButton!
     
     // MARK: - Properties
     
@@ -68,6 +70,7 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
 
         fetchPlayers()
         
+        previousHoleLabel.transform = CGAffineTransform(scaleX: -1, y: 1)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,7 +82,8 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBAction func nextHole(_ sender: Any) {
         if currentHole < 18 {
             currentHole += 1
-            holeNumber.text = "Hole # \(currentHole)"
+            holeNumber.text = "HOLE \(currentHole)"
+
             player1ScoreLabel.text = String(player1Score.reduce(0, +))
             player2ScoreLabel.text = String(player2Score.reduce(0, +))
             player3ScoreLabel.text = String(player3Score.reduce(0, +))
@@ -97,7 +101,8 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBAction func previousHole(_ sender: Any) {
         if currentHole > 1 {
             currentHole -= 1
-            holeNumber.text = "Hole # \(currentHole)"
+            holeNumber.text = "HOLE \(currentHole)"
+            
             player1ScoreLabel.text = String(player1Score.reduce(0, +))
             player2ScoreLabel.text = String(player2Score.reduce(0, +))
             player3ScoreLabel.text = String(player3Score.reduce(0, +))
