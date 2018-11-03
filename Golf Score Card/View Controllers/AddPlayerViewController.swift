@@ -19,13 +19,13 @@ class AddPlayerViewController: UIViewController, UITableViewDelegate, UITableVie
     
     // MARK: - Properties
     
-    var ref: DatabaseReference!
+    var playerRef: DatabaseReference!
     var players = [Player]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        ref = Database.database().reference(withPath: "players")
+        playerRef = Database.database().reference(withPath: "players")
         
         retrievePlayers()
        
@@ -35,13 +35,10 @@ class AddPlayerViewController: UIViewController, UITableViewDelegate, UITableVie
         guard let name = playerName.text,
             let handicap = playerHandicap.text else { return }
         
-        let playerZ = Player(name: name, handicap: handicap)
         let player = ["name" : name, "handicap" : handicap]
         
-        ref?.child(name.lowercased()).setValue(player)
+        playerRef?.child(name.lowercased()).setValue(player)
         
-        players.append(playerZ)
-
         playerName.text = ""
         playerHandicap.text = ""
         
@@ -50,40 +47,23 @@ class AddPlayerViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func retrievePlayers() {
-//        Database.database().reference().child("players").observe(.childAdded, with: { (snapshot) in
-//
-//            if let dictionary = snapshot.value as? [String: AnyObject] {
-//                let player = Player()
-//
-//                player.name = dictionary["name"] as! String
-//                player.handicap = dictionary["handicap"] as! String
-//
-//                self.players.append(player)
-//
-//                DispatchQueue.main.async { self.playerTableView.reloadData() }
-//            }
-//
-//        }, withCancel: nil)
       
         let playerDB = Database.database().reference().child("players")
 
         playerDB.observe(.childAdded) { (snapshot) in
-
-            let snapshotValue = snapshot.value as! Dictionary<String,String>
-
-            let name = snapshotValue["name"]!
-            let handicap = snapshotValue["handicap"]!
+      
+            let value = snapshot.value as? NSDictionary
+            let name = value?["name"] as? String ?? ""
+            let handicap = value?["handicap"] as? String ?? ""
 
             let player = Player()
             player.name = name
             player.handicap = handicap
-
+            
             self.players.append(player)
             
             DispatchQueue.main.async { self.playerTableView.reloadData() }
-            
         }
-
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -93,12 +73,23 @@ class AddPlayerViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlayerCell", for: indexPath)
-        
+
         cell.textLabel?.text = players[indexPath.row].name
         cell.detailTextLabel?.text = players[indexPath.row].handicap
     
-        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            
+            let player = players[indexPath.row].name
+            
+            players.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+            
+            playerRef.child(player.lowercased()).removeValue()
+        }
     }
     
 

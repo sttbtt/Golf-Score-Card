@@ -2,4 +2,54 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Golf Score Card/View Controllers/AddPlayerViewController.swift"
+            timestampString = "562904420.439839"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "retrievePlayers()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Golf_Score_Card.AddPlayerViewController.retrievePlayers() -&gt; ()"
+                  moduleName = "Golf Score Card"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/scottbennett/Desktop/Golf%20Score%20Card/Golf%20Score%20Card/View%20Controllers/AddPlayerViewController.swift"
+                  timestampString = "562890495.725449"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "74"
+                  endingLineNumber = "74"
+                  offsetFromSymbolStart = "215">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.FIRDataSnapshot) -&gt; () in Golf_Score_Card.AddPlayerViewController.retrievePlayers() -&gt; ()"
+                  moduleName = "Golf Score Card"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/scottbennett/Desktop/Golf%20Score%20Card/Golf%20Score%20Card/View%20Controllers/AddPlayerViewController.swift"
+                  timestampString = "562890495.72726"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "45">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

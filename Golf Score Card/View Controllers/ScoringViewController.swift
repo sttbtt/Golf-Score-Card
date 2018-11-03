@@ -141,6 +141,7 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     func updateLabels() {
+        
         player1Name.text = players[0].name
         player2Name.text = players[1].name
         player3Name.text = players[2].name
@@ -193,8 +194,12 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
 
-
-
+    @IBAction func totalParSelector(_ sender: Any) {
+        
+        // TODO: - Switch between total and over par scoring
+    }
+    
+    // TODO: - Design landscape layout
 
     // MARK: - Rotation
     
