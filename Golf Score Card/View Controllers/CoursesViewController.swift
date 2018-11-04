@@ -126,9 +126,6 @@ class CoursesViewController: UIViewController {
             side = "front"
         }
         
-        
-        parTextFields[5].text = "7"
-        
     }
     
     @IBAction func saveButton(_ sender: Any) {

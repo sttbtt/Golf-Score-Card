@@ -519,6 +519,7 @@
                         <outlet property="player4PickerView" destination="32Z-sz-N2T" id="eQ6-5Q-WQz"/>
                         <outlet property="player4ScoreLabel" destination="P5k-iT-r36" id="3pJ-0n-Hcv"/>
                         <outlet property="previousHoleLabel" destination="Fgu-uV-fDT" id="5cY-SR-8aC"/>
+                        <outlet property="segmentedControl" destination="ZgK-BM-9NM" id="u3W-jw-Rqj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ahf-Ax-IdH" userLabel="First Responder" sceneMemberID="firstResponder"/>
