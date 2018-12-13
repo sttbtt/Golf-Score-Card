@@ -12,10 +12,12 @@ import Firebase
 class Player {
     var name: String
     var handicap: String
+    var status: String
     
-    init(name: String = " ", handicap: String = "0") {
+    init(name: String = " ", handicap: String = "0", status: String = "out") {
         self.name = name
         self.handicap = handicap
+        self.status = status
     }
     
 //    init?(snapshot: DataSnapshot) {

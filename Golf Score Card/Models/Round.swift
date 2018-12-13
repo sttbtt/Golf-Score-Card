@@ -9,5 +9,5 @@
 import Foundation
 
 struct Round {
-    let score: [String:Int]
+    let score: [String: Int]
 }

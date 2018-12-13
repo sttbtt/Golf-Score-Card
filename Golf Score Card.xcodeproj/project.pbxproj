@@ -11,6 +11,10 @@
 		F120F1972189FE25006D47B0 /* CoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F120F1962189FE25006D47B0 /* CoursesViewController.swift */; };
 		F120F210218BB28E006D47B0 /* PlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F120F20F218BB28E006D47B0 /* PlayerController.swift */; };
 		F120F212218BB2A1006D47B0 /* CourseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F120F211218BB2A1006D47B0 /* CourseController.swift */; };
+		F1D0149921C06E5B002C1298 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1D0149821C06E5B002C1298 /* CloudKit.framework */; };
+		F1D014B121C1A590002C1298 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1D014B021C1A590002C1298 /* HealthKit.framework */; };
+		F1D014B321C1B151002C1298 /* HealthKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D014B221C1B151002C1298 /* HealthKitHelper.swift */; };
+		F1D70182218F6C9800E3C6B4 /* RoundController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D70181218F6C9800E3C6B4 /* RoundController.swift */; };
 		F1ED9B6E2187B2970093B95B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1ED9B6D2187B2970093B95B /* GoogleService-Info.plist */; };
 		F1F131B521873B2B00EAB647 /* AddPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F131B421873B2B00EAB647 /* AddPlayerViewController.swift */; };
 		F1FD00932186815E00EDD3A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FD00922186815E00EDD3A1 /* AppDelegate.swift */; };
@@ -29,6 +33,11 @@
 		F120F1962189FE25006D47B0 /* CoursesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesViewController.swift; sourceTree = "<group>"; };
 		F120F20F218BB28E006D47B0 /* PlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerController.swift; sourceTree = "<group>"; };
 		F120F211218BB2A1006D47B0 /* CourseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseController.swift; sourceTree = "<group>"; };
+		F1D0149721C06E56002C1298 /* Golf Score Card.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Golf Score Card.entitlements"; sourceTree = "<group>"; };
+		F1D0149821C06E5B002C1298 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		F1D014B021C1A590002C1298 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		F1D014B221C1B151002C1298 /* HealthKitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitHelper.swift; sourceTree = "<group>"; };
+		F1D70181218F6C9800E3C6B4 /* RoundController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundController.swift; sourceTree = "<group>"; };
 		F1ED9B6D2187B2970093B95B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F1F131B421873B2B00EAB647 /* AddPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlayerViewController.swift; sourceTree = "<group>"; };
 		F1FD008F2186815E00EDD3A1 /* Golf Score Card.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Golf Score Card.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,7 +58,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1D014B121C1A590002C1298 /* HealthKit.framework in Frameworks */,
 				8C2497FD9B1F54489F9AEE4E /* Pods_Golf_Score_Card.framework in Frameworks */,
+				F1D0149921C06E5B002C1298 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +79,8 @@
 		C235722E60A47967CDC43BC6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F1D014B021C1A590002C1298 /* HealthKit.framework */,
+				F1D0149821C06E5B002C1298 /* CloudKit.framework */,
 				40EEA52C6ED540970EBFF87F /* Pods_Golf_Score_Card.framework */,
 			);
 			name = Frameworks;
@@ -78,6 +91,8 @@
 			children = (
 				F120F20F218BB28E006D47B0 /* PlayerController.swift */,
 				F120F211218BB2A1006D47B0 /* CourseController.swift */,
+				F1D70181218F6C9800E3C6B4 /* RoundController.swift */,
+				F1D014B221C1B151002C1298 /* HealthKitHelper.swift */,
 			);
 			path = "Model Controllers";
 			sourceTree = "<group>";
@@ -103,6 +118,7 @@
 		F1FD00912186815E00EDD3A1 /* Golf Score Card */ = {
 			isa = PBXGroup;
 			children = (
+				F1D0149721C06E56002C1298 /* Golf Score Card.entitlements */,
 				F1ED9B6D2187B2970093B95B /* GoogleService-Info.plist */,
 				F1FD00A92186BF8A00EDD3A1 /* Models */,
 				F120F20E218BB262006D47B0 /* Model Controllers */,
@@ -135,8 +151,8 @@
 		F1FD00A82186B8A500EDD3A1 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F1FD00A62186B8A100EDD3A1 /* ScoringViewController.swift */,
 				F1F131B421873B2B00EAB647 /* AddPlayerViewController.swift */,
+				F1FD00A62186B8A100EDD3A1 /* ScoringViewController.swift */,
 				F120F1962189FE25006D47B0 /* CoursesViewController.swift */,
 			);
 			path = "View Controllers";
@@ -186,6 +202,17 @@
 				TargetAttributes = {
 					F1FD008E2186815E00EDD3A1 = {
 						CreatedOnToolsVersion = 10.0;
+						SystemCapabilities = {
+							com.apple.HealthKit = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -279,6 +306,7 @@
 			files = (
 				F1FD00AD2186BFA100EDD3A1 /* Course.swift in Sources */,
 				F120F1972189FE25006D47B0 /* CoursesViewController.swift in Sources */,
+				F1D70182218F6C9800E3C6B4 /* RoundController.swift in Sources */,
 				F120F210218BB28E006D47B0 /* PlayerController.swift in Sources */,
 				F1F131B521873B2B00EAB647 /* AddPlayerViewController.swift in Sources */,
 				F1FD00A72186B8A100EDD3A1 /* ScoringViewController.swift in Sources */,
@@ -286,6 +314,7 @@
 				F1FD00AF2186BFAD00EDD3A1 /* Round.swift in Sources */,
 				F1FD00932186815E00EDD3A1 /* AppDelegate.swift in Sources */,
 				F120F212218BB2A1006D47B0 /* CourseController.swift in Sources */,
+				F1D014B321C1B151002C1298 /* HealthKitHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +461,7 @@
 			baseConfigurationReference = 280DDB01B9B3F90DCBEA888A /* Pods-Golf Score Card.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Golf Score Card/Golf Score Card.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5KBWP959TD;
 				INFOPLIST_FILE = "$(SRCROOT)/Golf Score Card/Resources/Info.plist";
@@ -451,6 +481,7 @@
 			baseConfigurationReference = F735F5FF95CA900236F38B38 /* Pods-Golf Score Card.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Golf Score Card/Golf Score Card.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5KBWP959TD;
 				INFOPLIST_FILE = "$(SRCROOT)/Golf Score Card/Resources/Info.plist";

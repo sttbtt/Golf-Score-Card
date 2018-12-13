@@ -8,8 +8,12 @@
 
 import UIKit
 import Firebase
+import MapKit
+import HealthKit
 
-class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, MKMapViewDelegate, CLLocationManagerDelegate {
+    
+    // MARK: - Properties
     
     @IBOutlet weak var player1Name: UILabel!
     @IBOutlet weak var player2Name: UILabel!
@@ -30,7 +34,9 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var nextHoleLabel: UIButton!
     @IBOutlet weak var previousHoleLabel: UIButton!
     
-    // MARK: - Properties
+    @IBOutlet weak var mapView: MKMapView!
+    
+    @IBOutlet weak var stepsLabel: UILabel!
     
     var strokeSelected: String = ""
     
@@ -45,7 +51,7 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     var player2Score = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     var player3Score = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     var player4Score = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    
+
     var player1Par = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     var player2Par = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     var player3Par = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -60,15 +66,25 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     var scoreType = true
     
+//    let newPin = MKPointAnnotation()
+    
     
     // Mark: - References
     
-    var ref: DatabaseReference!
+    let healthKitManager = HealthKitManager()
+    var roundRef: DatabaseReference!
     var players = [Player]()
+    
+    var locationManager = CLLocationManager()
+    private var userTrackingButton = MKUserTrackingButton()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        healthKitManager.authorizeHealthKit()
+        
+        roundRef = Database.database().reference(withPath: "rounds")
         
         self.player1PickerView.delegate = self
         self.player1PickerView.dataSource = self
@@ -80,9 +96,24 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         self.player4PickerView.dataSource = self
 
         fetchPlayers()
+        fetchScores()
         
         previousHoleLabel.transform = CGAffineTransform(scaleX: -1, y: 1)
+        
+        mapView.showsUserLocation = true
+        if CLLocationManager.locationServicesEnabled() == true {
+            
+            if CLLocationManager.authorizationStatus() == .restricted || CLLocationManager.authorizationStatus() == .denied ||  CLLocationManager.authorizationStatus() == .notDetermined {
+                locationManager.requestWhenInUseAuthorization()
+            }
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.delegate = self
+            locationManager.startUpdatingLocation()
+        } else {
+            print("PLease turn on location services or GPS")
+        }
     }
+
 
     
     @IBAction func nextHole(_ sender: Any) {
@@ -90,6 +121,7 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             currentHole += 1
             holeNumber.text = "HOLE \(currentHole)"
             updateLabels()
+            updateScores()
         }
     }
     
@@ -98,6 +130,7 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             currentHole -= 1
             holeNumber.text = "HOLE \(currentHole)"
             updateLabels()
+            updateScores()
         }
     }
     
@@ -106,10 +139,9 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         
         playerDB.observe(.childAdded) { (snapshot) in
             
-            let snapshotValue = snapshot.value as! Dictionary<String,String>
-            
-            let name = snapshotValue["name"]!
-            let handicap = snapshotValue["handicap"]!
+            let value = snapshot.value as? NSDictionary
+            let name = value?["name"] as? String ?? ""
+            let handicap = value?["handicap"] as? String ?? ""
             
             let player = Player()
             player.name = name
@@ -117,11 +149,24 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             
             self.players.append(player)
             
-            DispatchQueue.main.async {
-                self.updateLabels()
-            }
+            DispatchQueue.main.async { self.updateLabels() }
         }
-       
+    }
+    
+    func fetchScores() {
+        let roundsDB = Database.database().reference().child("rounds")
+        
+        roundsDB.observe(.childAdded) { (snapshot) in
+            
+            let value = snapshot.value as? NSDictionary
+            let score = value?["hole1"] as? String ?? "0"
+            
+            
+            self.player1Score.append(Int(score)!)
+            
+            DispatchQueue.main.async { self.updateLabels() }
+        }
+        
     }
     
     func updateLabels() {
@@ -191,12 +236,21 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
     }
     
+    func updateScores() {
+        
+        let score1 = ["hole1" : String(player1Score[0])]
+        
+        roundRef.setValue(score1)
+//        roundRef.child("current round").child(players[1].name).setValue(player2Score)
+//        roundRef.child("current round").child(players[2].name).setValue(player3Score)
+//        roundRef.child("current round").child(players[3].name).setValue(player4Score)
+        
+    }
+    
 
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     @IBAction func totalParSelector(_ sender: Any) {
-        
-        // TODO: - Switch between total and over par scoring
         
         switch  segmentedControl.selectedSegmentIndex {
         case 0:
@@ -206,7 +260,6 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         default:
             break
         }
-        
         updateLabels()
     }
     
@@ -219,5 +272,110 @@ class ScoringViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         
         
     }
+    
+    // MARK: - HealthKit
+    
+    @IBAction func getSteps(_ sender: Any) {
+        
+        healthKitManager.authorizeHealthKit()
+        
+        healthKitManager.getTodaysSteps { (result) in
+            print("\(result)")
+            let formatted = String(format: "%.0f", result)
+            DispatchQueue.main.async {
+                self.stepsLabel.text = "\(formatted)"
+            }
+        }
+    }
+    
+}
 
+// MARK: - Mapping
+
+extension ScoringViewController {
+    
+    //MARK:- CLLocationManager Delegates  38.9679, -84.5844
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.locationManager.stopUpdatingLocation()
+        
+        let pioneerLocation = CLLocationCoordinate2D(latitude: 38.9679, longitude: -84.5844)
+        let location = CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
+        
+        let span = MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002)
+        
+        let region = MKCoordinateRegion(center: pioneerLocation, span: span)
+        
+//         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002))
+        
+        self.mapView.setRegion(region, animated: true)
+        
+        
+//       newPin.coordinate = location.coordinate
+//        mapView.addAnnotation(newPin)
+        
+        
+        
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Unable to access your current location")
+    }
+    
+//    func setUserLocationOnLowerPositiononMap(coordinate: CLLocationCoordinate2D) {
+//        var region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+//        region.center = coordinate
+//        self.mapView.setRegion(region, animated: true)
+//        self.map.moveCenterByOffSet(offSet: CGPoint(x: 0, y: -130), coordinate: coordinate)
+//        //self.map.moveCenterByOffSet(offSet: CGPoint(x: 0, y: SCREEN_HEIGHT - SCREEN_HEIGHT * 4/3 + 0 ), coordinate: coordinate)
+//    }
+    
+}
+
+// MARK: - Test Data
+
+extension ScoringViewController {
+    
+    @IBAction func loadTestScores(_ sender: Any) {
+        let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+        feedbackGenerator.impactOccurred()
+        
+        var player1TestScore = [Int]()
+        var player2TestScore = [Int]()
+        var player3TestScore = [Int]()
+        var player4TestScore = [Int]()
+        
+        var player1TestPar = [Int]()
+        var player2TestPar = [Int]()
+        var player3TestPar = [Int]()
+        var player4TestPar = [Int]()
+        
+        for hole in 0...17 {
+            let score1 = Int.random(in: (coursePar[hole] - 2)...(coursePar[hole] + 3))
+            player1TestScore.append(score1)
+            player1TestPar.append(score1 - coursePar[hole])
+            let score2 = Int.random(in: (coursePar[hole] - 2)...(coursePar[hole] + 3))
+            player2TestScore.append(score2)
+            player2TestPar.append(score2 - coursePar[hole])
+            let score3 = Int.random(in: (coursePar[hole] - 2)...(coursePar[hole] + 3))
+            player3TestScore.append(score3)
+            player3TestPar.append(score3 - coursePar[hole])
+            let score4 = Int.random(in: (coursePar[hole] - 2)...(coursePar[hole] + 3))
+            player4TestScore.append(score4)
+            player4TestPar.append(score4 - coursePar[hole])
+            
+        }
+        
+        player1Score = player1TestScore
+        player2Score = player2TestScore
+        player3Score = player3TestScore
+        player4Score = player4TestScore
+        
+        player1Par = player1TestPar
+        player2Par = player2TestPar
+        player3Par = player3TestPar
+        player4Par = player4TestPar
+        
+        updateLabels()
+    }
 }

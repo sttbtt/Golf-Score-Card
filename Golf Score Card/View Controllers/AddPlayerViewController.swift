@@ -16,6 +16,7 @@ class AddPlayerViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var playerName: UITextField!
     @IBOutlet weak var playerHandicap: UITextField!
     @IBOutlet weak var playerTableView: UITableView!
+    @IBOutlet weak var addPlayerButton: UIButton!
     
     // MARK: - Properties
     
@@ -25,25 +26,38 @@ class AddPlayerViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        playerTableView.layer.cornerRadius = 10
+        
         playerRef = Database.database().reference(withPath: "players")
         
         retrievePlayers()
+        
+        
        
     }
     
     @IBAction func addPlayer(_ sender: Any) {
-        guard let name = playerName.text,
-            let handicap = playerHandicap.text else { return }
         
-        let player = ["name" : name, "handicap" : handicap]
-        
-        playerRef?.child(name.lowercased()).setValue(player)
+        updatePlayer()
         
         playerName.text = ""
         playerHandicap.text = ""
         
         self.view.endEditing(true)
+        addPlayerButton.setTitle("Add Player", for: .normal)
         
+        
+    }
+    
+    func updatePlayer() {
+        
+        guard let name = playerName.text,
+            let handicap = playerHandicap.text else { return }
+        let status = ""
+        let player = ["name" : name, "handicap" : handicap, "status" : status]
+        
+        playerRef?.child(name.lowercased()).setValue(player)
+        self.playerTableView.reloadData()
     }
     
     func retrievePlayers() {
@@ -55,10 +69,12 @@ class AddPlayerViewController: UIViewController, UITableViewDelegate, UITableVie
             let value = snapshot.value as? NSDictionary
             let name = value?["name"] as? String ?? ""
             let handicap = value?["handicap"] as? String ?? ""
-
+            let status = value?["status"] as? String ?? "out"
+            
             let player = Player()
             player.name = name
             player.handicap = handicap
+            player.status = status
             
             self.players.append(player)
             
@@ -75,7 +91,13 @@ class AddPlayerViewController: UIViewController, UITableViewDelegate, UITableVie
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlayerCell", for: indexPath)
 
         cell.textLabel?.text = players[indexPath.row].name
-        cell.detailTextLabel?.text = players[indexPath.row].handicap
+        cell.detailTextLabel?.text = "Handicap: \(players[indexPath.row].handicap)"
+        if players[indexPath.row].status == "out" {
+           cell.accessoryType = .none
+        } else {
+            cell.accessoryType = .checkmark
+        }
+        
     
         return cell
     }
@@ -90,6 +112,21 @@ class AddPlayerViewController: UIViewController, UITableViewDelegate, UITableVie
             
             playerRef.child(player.lowercased()).removeValue()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
+            tableView.cellForRow(at: indexPath)?.accessoryType = .none
+            players[indexPath.row].status = "out"
+        } else {
+            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+            players[indexPath.row].status = "in"
+        }
+        
+        playerName.text = players[indexPath.row].name
+        playerHandicap.text = players[indexPath.row].handicap
+        addPlayerButton.setTitle("Update Player", for: .normal)
     }
     
 
